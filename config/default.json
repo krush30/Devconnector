@@ -1,0 +1,4 @@
+{
+    "mongoURI":"mongodb+srv://Krushna:KrushnaIngale@cluster0.kdict.mongodb.net/",
+    "jwtSecret":"mysecrettokken"
+}
