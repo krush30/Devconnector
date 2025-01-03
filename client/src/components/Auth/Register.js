@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { setAlert } from '../../actions/alert';
+import { register } from '../../actions/auth';
 
 const Register = () => {
     const dispatch = useDispatch();
@@ -14,6 +15,8 @@ const Register = () => {
     });
 
     const { name, email, password, password2 } = formData;
+    console.log(formData);
+
 
     const onChange = (e) =>
         setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -23,7 +26,7 @@ const Register = () => {
         if (password !== password2) {
             dispatch(setAlert('Passwords do not match', 'danger'));
         } else {
-            console.log(formData);
+            dispatch(register({ name, email, password }));
         }
     };
 
@@ -41,7 +44,7 @@ const Register = () => {
                         name="name"
                         value={name}
                         onChange={onChange}
-                        required
+
                     />
                 </div>
                 <div className="form-group">
@@ -64,7 +67,7 @@ const Register = () => {
                         value={password}
                         onChange={onChange}
                         minLength="6"
-                        required
+
                     />
                 </div>
                 <div className="form-group">
@@ -75,7 +78,7 @@ const Register = () => {
                         value={password2}
                         onChange={onChange}
                         minLength="6"
-                        required
+
                     />
                 </div>
                 <input type="submit" className="btn btn-primary" value="Register" />
