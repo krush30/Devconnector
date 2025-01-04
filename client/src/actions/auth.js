@@ -1,11 +1,13 @@
 import axios from 'axios'
-import { AUTH_ERROR, LOGIN_FAIL, LOGIN_SUCCESS, LOGOUT, REGISTER_FAILURE, REGISTER_SUCCESS, USER_LOADED } from './types';
+import { AUTH_ERROR, CLEAR_PROFILE, LOGIN_FAIL, LOGIN_SUCCESS, LOGOUT, REGISTER_FAILURE, REGISTER_SUCCESS, USER_LOADED } from './types';
 import { setAlert } from './alert';
 import setAuthToken from '../utils/setAuthToken';
+import { getCurrentProfile } from './profile';
 
 
 
 // Load user
+
 export const loadUser = () => async dispatch => {
     if (localStorage.token) {
         setAuthToken(localStorage.token);
@@ -15,8 +17,9 @@ export const loadUser = () => async dispatch => {
         const res = await axios.get('http://localhost:5000/api/auth');
         dispatch({
             type: USER_LOADED,
-            payload: res.data.token,
+            payload: res.data,
         });
+        dispatch(getCurrentProfile());
     } catch (error) {
         dispatch({
             type: AUTH_ERROR,
@@ -114,4 +117,8 @@ export const login = ({ email, password }) => async dispatch => {
 
 export const logout = () => dispatch => {
     dispatch({ type: LOGOUT })
+    dispatch({ type: CLEAR_PROFILE })
+
 }
+
+

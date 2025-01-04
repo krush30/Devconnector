@@ -59,6 +59,7 @@ router.post('/', [auth,
             linkedin
         } = req.body;
 
+
         // Build profile obj
         const profileFields = {};
         profileFields.user = req.user.id;
@@ -79,6 +80,8 @@ router.post('/', [auth,
         if (instagram) profileFields.social.instagram = instagram;
         if (linkedin) profileFields.social.linkedin = linkedin;
 
+        console.log(req.body);
+
         //Update
         try {
             let profile = await Profile.findOne({ user: req.user.id })
@@ -90,6 +93,7 @@ router.post('/', [auth,
 
                 return res.json(profile);
             }
+            console.log('Request body:', req.body);
 
             // Create
             profile = new Profile(profileFields);

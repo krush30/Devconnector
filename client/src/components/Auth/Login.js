@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, Navigate } from 'react-router-dom';
 import { login } from '../../actions/auth';
@@ -11,6 +11,8 @@ const Login = () => {
     });
 
     const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
+    const user = useSelector((state) => state.auth.user);
+
 
     const onChange = (e) => setFormData({ ...formData, [e.target.name]: e.target.value });
     const onSubmit = async (e) => {
@@ -23,6 +25,7 @@ const Login = () => {
     if (isAuthenticated) {
         return <Navigate to="/dashboard" />;
     }
+
 
     return (
         <>
@@ -55,9 +58,9 @@ const Login = () => {
             <p className="my-1">
                 Don't have an account? <Link to="/register">Register</Link>
             </p>
+
         </>
     );
 };
-
 
 export default Login;

@@ -11,11 +11,19 @@ const Navbar = () => {
         <ul>
             <li>
                 <Link onClick={() => dispatch(logout())} to="/">
-                    <i className='fas fa-sign-out-alt'>
-                        <span className='hide-smS'>Logout</span>
+                    <i className='fas fa-sign-out-alt'>{' '}
+                        <span className='hide-sm'>Logout</span>
                     </i>
                 </Link>
             </li>
+            <li>
+                <i className='fas fa-sign-out-alt'>{' '}
+                    <span className='hide-sm'>
+                        <Link to="/dashboard">Dashboard</Link>
+                    </span>
+                </i>
+            </li>
+
         </ul>
     );
 
