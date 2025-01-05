@@ -1,16 +1,18 @@
 import React, { Fragment, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { getCurrentProfile } from '../../actions/profile';
+import { deleteAccount, getCurrentProfile } from '../../actions/profile';
 import Spinner from '../layout/Spinner';
 import { Link } from 'react-router-dom';
 import DashboardActions from './DashboardActions';
+import Experience from './Experience';
+import Education from './Education';
 
 const Dashboard = () => {
     const dispatch = useDispatch();
 
     useEffect(() => {
         dispatch(getCurrentProfile());
-    }, [dispatch]);
+    }, [getCurrentProfile]);
 
     const user = useSelector((state) => state.auth.user);
     const { profile, loading } = useSelector((state) => state.profile);
@@ -21,6 +23,7 @@ const Dashboard = () => {
         return <Spinner />;
     }
 
+
     return (
         <>
             <h1 className='large text-primary'> DashBoard</h1>
@@ -30,7 +33,19 @@ const Dashboard = () => {
                 </i>
             </p>
             {profile !== null ?
-                <Fragment><DashboardActions /></Fragment> :
+                <Fragment>
+                    <DashboardActions />
+                    <Experience experience={profile.experience} />
+                    <Education education={profile.education} />
+                    <div className='my-2'>
+                        <button className='btn btn-danger' onClick={() => { dispatch(deleteAccount()) }}>
+                            <i className='fas fa-user-minus'>
+                                Delete  my Account
+                            </i>
+
+                        </button>
+                    </div>
+                </Fragment> :
                 <Fragment>
                     <p>
                         You have not yet setup a profile, please add some info

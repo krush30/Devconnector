@@ -4,8 +4,8 @@ const Spinner = () => {
     return (
         <Fragment>
             <img
-                src="/img/anime-anime-loading.gif"
-                style={{ width: '200px', margin: 'auto', display: 'block' }}
+                src="https://media1.tenor.com/m/Gv1cMkqev0wAAAAC/anime-confused.gif"
+                style={{ width: '500px', margin: 'auto', display: 'block' }}
                 alt="Loading..."
             />
 

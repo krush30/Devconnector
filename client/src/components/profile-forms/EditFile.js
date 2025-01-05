@@ -56,7 +56,7 @@ const EditProfile = () => {
                 linkedin: profile.social?.linkedin || ''
             });
         }
-    }, [dispatch, loading]);
+    }, [getCurrentProfile, loading]);
 
 
 

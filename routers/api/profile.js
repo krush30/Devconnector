@@ -9,6 +9,9 @@ const config = require('config')
 
 const Profile = require('../../modals/Profile')
 const User = require('../../modals/user')
+const Post = require('../../modals/Post')
+
+
 
 // endpoints api/profile/me
 // get current users profile and it is private
@@ -144,7 +147,11 @@ router.get('/user/:user_id', async (req, res) => {
 //Delete profile , user and posts
 // Private
 router.delete('/', auth, async (req, res) => {
+
     try {
+        // Remove User Posts
+        await Post.deleteMany({ user: req.user.id })
+
         // Remove profile
         await Profile.findOneAndDelete({ user: req.user.id })
         // Remove User

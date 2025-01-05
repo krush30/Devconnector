@@ -1,4 +1,4 @@
-import { AUTH_ERROR, LOGIN_FAIL, LOGIN_SUCCESS, LOGOUT, REGISTER_FAILURE, REGISTER_SUCCESS, USER_LOADED } from "../actions/types";
+import { AUTH_ERROR, DELETE_PROFILE, LOGIN_FAIL, LOGIN_SUCCESS, LOGOUT, REGISTER_FAILURE, REGISTER_SUCCESS, USER_LOADED } from "../actions/types";
 
 const initialState =
 {   //local storage can access storage item on web
@@ -33,6 +33,7 @@ const authUsers = (state = initialState, action) => {
         case AUTH_ERROR:
         case LOGIN_FAIL:
         case LOGOUT:
+        case DELETE_PROFILE:
             localStorage.removeItem('token');
             return {
                 ...state,
