@@ -20,6 +20,7 @@ import AddEducation from './components/profile-forms/AddEducation';
 import Profiles from './components/profiles/Profiles';
 import Profile from './components/profile/Profile';
 import Posts from './components/Posts/Posts';
+import Post from './components/POST/Post';
 
 if (localStorage.token) {
   setAuthToken(localStorage.token);
@@ -70,6 +71,10 @@ const App = () => {
               <Route
                 path="/posts"
                 element={<PrivateRoute><Posts /></PrivateRoute>}
+              />
+              <Route
+                path="/posts/:id"
+                element={<PrivateRoute><Post /></PrivateRoute>}
               />
 
 

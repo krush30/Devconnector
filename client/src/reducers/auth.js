@@ -12,7 +12,6 @@ const authUsers = (state = initialState, action) => {
     const { type, payload } = action;
     switch (type) {
         case USER_LOADED:
-            console.log('User Loaded:', payload); // Check if user data is properly loaded
 
             return {
                 ...state,

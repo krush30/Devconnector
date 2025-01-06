@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getPosts } from '../../actions/post';
 import Spinner from '../layout/Spinner';
 import PostItem from './PostItem';
+import PostForm from './PostForm';
 
 const Posts = () => {
     const dispatch = useDispatch()
@@ -20,6 +21,7 @@ const Posts = () => {
             <p className='lead'>
                 <i className='fas fa-user'></i>Welcome to community
             </p>
+            <PostForm />
             <div>
                 {post.map(po => (<PostItem key={posts?._id} post={po} />))}
             </div>

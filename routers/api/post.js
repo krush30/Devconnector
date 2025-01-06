@@ -125,16 +125,18 @@ router.put('/like/:id', auth, async (req, res) => {
 
 // Unlike by id 
 
+// Unlike a post
 router.put('/unlike/:id', auth, async (req, res) => {
     try {
         const post = await Post.findById(req.params.id);
-        if (post.likes.filter(like => like.user.toString() === req.user.id).length === 1) {
-            return res.status(400).json({ msg: 'post has not yet liked' })
+
+        // Check if the post is not yet liked
+        if (!post.likes.some(like => like.user.toString() === req.user.id)) {
+            return res.status(400).json({ msg: 'Post has not been liked' });
         }
 
-        // Get remove index
-        const removeindex = post.likes.map(like => like.user.toString()).indexOf(req.user.id)
-        post.likes.splice(removeindex, 1)
+        // Remove the like
+        post.likes = post.likes.filter(like => like.user.toString() !== req.user.id);
 
         await post.save();
 
@@ -142,11 +144,12 @@ router.put('/unlike/:id', auth, async (req, res) => {
     } catch (err) {
         console.error(err.message);
         if (err.kind === 'ObjectId') {
-            return res.status(404).json({ msg: 'Post not found' })
+            return res.status(404).json({ msg: 'Post not found' });
         }
-        res.status(500).send('Server error')
+        res.status(500).send('Server error');
     }
-})
+});
+
 
 // Put api/post/comment/:id
 // comment on a post and it is public

@@ -1,59 +1,65 @@
-import React, { Fragment } from 'react'
-import Moment from 'react-moment'
-import { useSelector } from 'react-redux'
-import { Link } from 'react-router-dom'
+import React, { Fragment } from 'react';
+import Moment from 'react-moment';
+import { useDispatch, useSelector } from 'react-redux';
+import { Link } from 'react-router-dom';
+import { addLike, deletePosts, removeLike } from '../../actions/post';
 
-const PostItem = ({ post: { _id, text, name, avatar, user, likes, comments, date } }) => {
-    const auth = useSelector(state => state.auth)
+const PostItem = ({ post: { _id, text, name, avatar, user, likes, comments, date }, showAction = true }) => {
+    const auth = useSelector(state => state.auth);
+    const dispatch = useDispatch();
 
     return (
         <Fragment>
-            <div class="post bg-white p-1 my-1">
+            <div className="post bg-white p-1 my-1">
                 <div>
-                    <Link to={"/profile"}>
-                        <img
-                            class="round-img"
-                            src={avatar}
-                            alt=""
-                        />
+                    <Link to={`/profile/${user}`}>
+                        <img className="round-img" src={avatar} alt="" />
                         <h4>{name}</h4>
                     </Link>
                 </div>
                 <div>
-                    <p class="my-1">
-                        {text}
+                    <p className="my-1">{text}</p>
+                    <p className="post-date">
+                        <Moment format="YYYY/MM/DD">{date}</Moment>
                     </p>
-                    <p class="post-date">
-                        <Moment format='YYYY/MM/DD'>{date}</Moment>
-                    </p>
-                    <button type="button" class="btn btn-light">
-                        <i class="fas fa-thumbs-up"></i>
-                        <span>{likes.length}</span>
-                    </button>
-                    <button type="button" class="btn btn-light">
-                        <i class="fas fa-thumbs-down"></i>
-                    </button>
-                    <Link to="post.html" class="btn btn-primary">
-                        Discussion <span class='comment-count'>{comments.length}</span>
-                    </Link>
-                    {!auth?.loading && user === auth?.user._id && (
-                        <button
-                            type="button"
-                            class="btn btn-danger"
-                        >
-                            <i class="fas fa-times"></i>
-                        </button>
+                    {showAction && (
+                        <Fragment>
+                            <button
+                                onClick={() => dispatch(addLike(_id))}
+                                type="button"
+                                className="btn btn-light"
+                            >
+                                <i className="fas fa-thumbs-up"></i> Like{' '}
+                                <span>{likes.length}</span>
+                            </button>
+                            <button
+                                onClick={() => dispatch(removeLike(_id))}
+                                type="button"
+                                className="btn btn-light"
+                            >
+                                <i className="fas fa-thumbs-down"></i> Unlike
+                            </button>
+                            <Link to={`/posts/${_id}`} className="btn btn-primary">
+                                Discussion{' '}
+                                {comments.length > 0 && (
+                                    <span className="comment-count">{comments.length}</span>
+                                )}
+                            </Link>
+                            {auth.user && auth.user._id === user && (
+                                <button
+                                    onClick={() => dispatch(deletePosts(_id))}
+                                    type="button"
+                                    className="btn btn-danger"
+                                >
+                                    Delete Post
+                                </button>
+                            )}
+                        </Fragment>
                     )}
-                    <button
-                        type="button"
-                        class="btn btn-danger"
-                    >
-                        <i class="fas fa-times"></i>
-                    </button>
                 </div>
             </div>
         </Fragment>
-    )
-}
+    );
+};
 
-export default PostItem
+export default PostItem;

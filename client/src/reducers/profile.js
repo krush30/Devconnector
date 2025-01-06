@@ -9,12 +9,10 @@ const initialState = {
 }
 
 const profileReducer = (state = initialState, action) => {
-    console.log("Reducer Action: ", action); // Log the dispatched action
     const { type, payload } = action;
     switch (type) {
         case GET_PROFILE:
         case UPDATE_PROFILE:
-            console.log("Payload: ", payload); // Log the payload
             return {
                 ...state,
                 profile: payload,
