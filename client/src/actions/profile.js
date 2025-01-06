@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { CLEAR_PROFILE, DELETE_PROFILE, GET_PROFILE, GET_PROFILES, PROFILE_ERROR, UPDATE_PROFILE } from './types';
+import { CLEAR_PROFILE, DELETE_PROFILE, GET_PROFILE, GET_PROFILES, GET_REPOS, PROFILE_ERROR, UPDATE_PROFILE } from './types';
 import { setAlert } from './alert';
 // Get current user profile
 
@@ -59,7 +59,7 @@ export const getGithubRepos = (username) => async dispatch => {
     try {
         const res = await axios.get(`http://localhost:5000/api/profile/github/${username}`);
         dispatch({
-            type: GET_PROFILE,
+            type: GET_REPOS,
             payload: res.data
         })
     } catch (err) {

@@ -32,7 +32,7 @@ const Dashboard = () => {
                     Welcome {user && user.name}
                 </i>
             </p>
-            {profile !== null ?
+            {profile ?
                 <Fragment>
                     <DashboardActions />
                     <Experience experience={profile.experience} />

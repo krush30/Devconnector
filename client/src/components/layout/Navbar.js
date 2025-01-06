@@ -28,6 +28,13 @@ const Navbar = () => {
                     </span>
                 </i>
             </li>
+            <li>
+                <i className='fas fa-sign-out-alt'>{' '}
+                    <span className='hide-sm'>
+                        <Link to="/posts">Posts</Link>
+                    </span>
+                </i>
+            </li>
 
         </ul>
     );

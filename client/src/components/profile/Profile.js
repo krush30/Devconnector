@@ -3,6 +3,11 @@ import { useSelector, useDispatch } from 'react-redux';
 import { Link, useParams } from 'react-router-dom';
 import { getProfileById } from '../../actions/profile';
 import Spinner from '../layout/Spinner';
+import ProfileTop from './ProfileTop';
+import ProfileAbout from './ProfileAbout';
+import ProfileExperience from './ProfileExperience';
+import ProfileEducation from './ProfileEducation';
+import ProfileGit from './ProfileGit';
 
 const Profile = () => {
     const dispatch = useDispatch();
@@ -13,37 +18,55 @@ const Profile = () => {
 
     useEffect(() => {
         dispatch(getProfileById(id));
-
-        const hasReloaded = sessionStorage.getItem('profileReloaded');
-        if (!hasReloaded) {
-            const timer = setTimeout(() => {
-                sessionStorage.setItem('profileReloaded', 'true');
-                window.location.reload();
-            }, 4000);
-
-            return () => clearTimeout(timer);
-        }
     }, [dispatch, id]);
 
     if (loading || !profile) {
         return <Spinner />;
     }
 
-    console.log(profile);
-
-
     return (
         <Fragment>
             <Link to="/profiles" className="btn btn-light">
                 Back to Profiles
             </Link>
-            {auth.isAuthenticated &&
-                !auth.loading &&
-                auth.user?._id === profile.user?._id && (
+            {auth?.isAuthenticated &&
+                !auth?.loading &&
+                auth.user?._id === profile?.user?._id && (
                     <Link to="/edit-profile" className="btn btn-dark">
                         Edit Profile
                     </Link>
                 )}
+            <ProfileTop profile={profile} />
+            <ProfileAbout profile={profile} />
+            <div>
+                <div className="profile-exp bg-white p-2">
+                    <h2 className="text-primary">Experience</h2>
+                    {profile.experience?.length > 0 ? (
+                        <Fragment>
+                            {profile.experience.map((exp) => (
+                                <ProfileExperience key={exp._id} experience={exp} />
+                            ))}
+                        </Fragment>
+                    ) : (
+                        <h4>No Experience Credentials</h4>
+                    )}
+                </div>
+                <div className="profile-exp bg-white p-2">
+                    <h2 className="text-primary">Education</h2>
+                    {profile.experience?.length > 0 ? (
+                        <Fragment>
+                            {profile.education.map((edu) => (
+                                <ProfileEducation key={edu._id} education={edu} />
+                            ))}
+                        </Fragment>
+                    ) : (
+                        <h4>No Education Credentials</h4>
+                    )}
+                </div>
+                {profile.githubusername && (<ProfileGit username={profile?.githubusername} />)}
+            </div>
+
+
         </Fragment>
     );
 };
