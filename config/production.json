@@ -1,0 +1,6 @@
+{
+    "mongoURI":"mongodb+srv://Krushna:KrushnaIngale@cluster0.kdict.mongodb.net/",
+    "jwtSecret":"mysecrettokken",
+    "githubClientId":"Ov23liQaOoUh1AJrNnsU",
+    "githubsecrete" :"f4d3b64ff5c3f185469512448b9d482d5e70507a"
+}
